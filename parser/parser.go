@@ -8,22 +8,22 @@ import (
 
 // Attribute is an individual attribute of the data
 type Attribute struct {
-	name   string
-	values []string
+	Name   string
+	Values []string
 }
 
 // Row represents and individual row of data
 type Row struct {
-	values map[string]string
-	result bool
+	Values map[string]string
+	Result bool
 }
 
 // InputData is the input to this program
 type InputData struct {
-	attributes     []Attribute
-	attributeNames []string
-	rows           []Row
-	resultName     string
+	Attributes     []Attribute
+	AttributeNames []string
+	Rows           []Row
+	ResultName     string
 }
 
 // ParseFile parses a CSV file to give an InputData pointer
@@ -47,23 +47,23 @@ func ParseFile(filename string) (*InputData, error) {
 		if idx == 0 {
 			inputData = newInputData(size)
 			for i := uint(0); i < size; i++ {
-				inputData.attributeNames[i] = record[i]
-				inputData.attributes[i].name = record[i]
+				inputData.AttributeNames[i] = record[i]
+				inputData.Attributes[i].Name = record[i]
 			}
-			inputData.resultName = record[size]
+			inputData.ResultName = record[size]
 		} else {
-			if len(inputData.rows) == idx-1 {
+			if len(inputData.Rows) == idx-1 {
 				inputData.doubleRows()
 			}
 			for i := uint(0); i < size; i++ {
-				inputData.rows[idx-1].values[inputData.attributeNames[i]] = record[i]
-				if !containsString(inputData.attributes[i].values, record[i]) {
-					inputData.attributes[i].values = append(inputData.attributes[i].values, record[i])
+				inputData.Rows[idx-1].Values[inputData.AttributeNames[i]] = record[i]
+				if !containsString(inputData.Attributes[i].Values, record[i]) {
+					inputData.Attributes[i].Values = append(inputData.Attributes[i].Values, record[i])
 				}
 			}
-			inputData.rows[idx-1].result = true
+			inputData.Rows[idx-1].Result = true
 			if record[size] == "no" {
-				inputData.rows[idx-1].result = false
+				inputData.Rows[idx-1].Result = false
 			}
 		}
 		idx++
@@ -73,24 +73,24 @@ func ParseFile(filename string) (*InputData, error) {
 
 func newInputData(size uint) *InputData {
 	inputData := new(InputData)
-	inputData.attributeNames = make([]string, size)
-	inputData.attributes = make([]Attribute, size)
-	for _, attribute := range inputData.attributes {
-		attribute.values = make([]string, 0)
+	inputData.AttributeNames = make([]string, size)
+	inputData.Attributes = make([]Attribute, size)
+	for _, attribute := range inputData.Attributes {
+		attribute.Values = make([]string, 0)
 	}
-	inputData.rows = make([]Row, 100)
-	for i := range inputData.rows {
-		inputData.rows[i].values = make(map[string]string)
+	inputData.Rows = make([]Row, 100)
+	for i := range inputData.Rows {
+		inputData.Rows[i].Values = make(map[string]string)
 	}
 	return inputData
 }
 
 func (data *InputData) doubleRows() {
-	newRows := make([]Row, len(data.rows))
+	newRows := make([]Row, len(data.Rows))
 	for i := range newRows {
-		newRows[i].values = make(map[string]string)
+		newRows[i].Values = make(map[string]string)
 	}
-	data.rows = append(data.rows, newRows...)
+	data.Rows = append(data.Rows, newRows...)
 }
 
 func containsString(arr []string, elem string) bool {

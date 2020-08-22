@@ -11,5 +11,5 @@ func TestParser(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected no error but got %v", err)
 	}
-	t.Logf("%+v", inputData)
+	t.Logf("%+v", inputData.AttributeNames)
 }
