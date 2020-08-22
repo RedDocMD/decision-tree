@@ -11,5 +11,14 @@ func TestParser(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected no error but got %v", err)
 	}
-	t.Logf("%+v", inputData.AttributeNames)
+	t.Logf("Attribute names: %+v", inputData.AttributeNames)
+	t.Logf("Result name: %s", inputData.ResultName)
+	for _, attr := range inputData.Attributes {
+		t.Logf("Attribute: %s Values: %+v", attr.Name, attr.Values)
+	}
+	expectedLen := uint(2201)
+	if inputData.Length != expectedLen {
+		t.Errorf("Expected %d rows, got %d values", expectedLen, inputData.Length)
+	}
+	t.Logf("%+v", inputData.Rows[0])
 }

@@ -24,6 +24,7 @@ type InputData struct {
 	AttributeNames []string
 	Rows           []Row
 	ResultName     string
+	Length         uint
 }
 
 // ParseFile parses a CSV file to give an InputData pointer
@@ -65,6 +66,7 @@ func ParseFile(filename string) (*InputData, error) {
 			if record[size] == "no" {
 				inputData.Rows[idx-1].Result = false
 			}
+			inputData.Length++
 		}
 		idx++
 	}
@@ -82,6 +84,7 @@ func newInputData(size uint) *InputData {
 	for i := range inputData.Rows {
 		inputData.Rows[i].Values = make(map[string]string)
 	}
+	inputData.Length = 0
 	return inputData
 }
 
