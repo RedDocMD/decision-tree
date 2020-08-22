@@ -79,11 +79,17 @@ func newInputData(size uint) *InputData {
 		attribute.values = make([]string, 0)
 	}
 	inputData.rows = make([]Row, 100)
+	for i := range inputData.rows {
+		inputData.rows[i].values = make(map[string]string)
+	}
 	return inputData
 }
 
 func (data *InputData) doubleRows() {
 	newRows := make([]Row, len(data.rows))
+	for i := range newRows {
+		newRows[i].values = make(map[string]string)
+	}
 	data.rows = append(data.rows, newRows...)
 }
 
