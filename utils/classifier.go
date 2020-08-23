@@ -7,13 +7,13 @@ import (
 )
 
 // AttributePartition partitions rows of input data on basis of attribute
-func AttributePartition(data *parser.InputData, attribute string) (map[string][]parser.Row, error) {
+func AttributePartition(data *parser.InputData, rows []parser.Row, attribute string) (map[string][]parser.Row, error) {
 	stat, _ := containsString(data.AttributeNames, attribute)
 	if !stat {
 		return nil, errors.New("Invalid attribute")
 	}
 	partitionedRows := make(map[string][]parser.Row)
-	for _, row := range data.Rows {
+	for _, row := range rows {
 		partitionedRows[row.Values[attribute]] = append(partitionedRows[row.Values[attribute]], row)
 	}
 	return partitionedRows, nil
