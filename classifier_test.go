@@ -6,12 +6,17 @@ import (
 	"testing"
 )
 
-func TestAttributePartitionCorrect(t *testing.T) {
+func getInputData(t *testing.T) *parser.InputData {
 	filename := "/home/deep/work/go/decision-tree/data/data1_19.csv"
 	inputData, err := parser.ParseFile(filename)
 	if err != nil {
 		t.Errorf("Expected no error but got %v", err)
 	}
+	return inputData
+}
+
+func TestAttributePartitionCorrect(t *testing.T) {
+	inputData := getInputData(t)
 	attribute := "pclass"
 	partitions, err := utils.AttributePartition(inputData, attribute)
 	if err != nil {
@@ -24,14 +29,14 @@ func TestAttributePartitionCorrect(t *testing.T) {
 }
 
 func TestAttributePartitionWrong(t *testing.T) {
-	filename := "/home/deep/work/go/decision-tree/data/data1_19.csv"
-	inputData, err := parser.ParseFile(filename)
-	if err != nil {
-		t.Errorf("Expected no error but got %v", err)
-	}
+	inputData := getInputData(t)
 	attribute := "garbage"
-	_, err = utils.AttributePartition(inputData, attribute)
+	_, err := utils.AttributePartition(inputData, attribute)
 	if err == nil {
 		t.Errorf("Expected error but got none")
 	}
+}
+
+func TestEntropyWhole(t *testing.T) {
+
 }

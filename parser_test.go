@@ -22,3 +22,11 @@ func TestParser(t *testing.T) {
 	}
 	t.Logf("%+v", inputData.Rows[0])
 }
+
+func TestParserWithWrongFilename(t *testing.T) {
+	filename := "hello"
+	_, err := parser.ParseFile(filename)
+	if err == nil {
+		t.Errorf("Expected error but got none")
+	}
+}
