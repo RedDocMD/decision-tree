@@ -1,13 +1,12 @@
-package main
+package parser
 
 import (
-	"RedDocMD/decision_tree/parser"
 	"testing"
 )
 
 func TestParser(t *testing.T) {
 	filename := "/home/deep/work/go/decision-tree/data/data1_19.csv"
-	inputData, err := parser.ParseFile(filename)
+	inputData, err := ParseFile(filename)
 	if err != nil {
 		t.Errorf("Expected no error but got %v", err)
 	}
@@ -25,7 +24,7 @@ func TestParser(t *testing.T) {
 
 func TestParserWithWrongFilename(t *testing.T) {
 	filename := "hello"
-	_, err := parser.ParseFile(filename)
+	_, err := ParseFile(filename)
 	if err == nil {
 		t.Errorf("Expected error but got none")
 	}

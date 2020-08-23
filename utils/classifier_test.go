@@ -1,8 +1,7 @@
-package main
+package utils
 
 import (
 	"RedDocMD/decision_tree/parser"
-	"RedDocMD/decision_tree/utils"
 	"testing"
 )
 
@@ -18,7 +17,7 @@ func getInputData(t *testing.T) *parser.InputData {
 func TestAttributePartitionCorrect(t *testing.T) {
 	inputData := getInputData(t)
 	attribute := "pclass"
-	partitions, err := utils.AttributePartition(inputData, inputData.Rows, attribute)
+	partitions, err := AttributePartition(inputData, inputData.Rows, attribute)
 	if err != nil {
 		t.Errorf("Expected no error but got %v", err)
 	}
@@ -31,7 +30,7 @@ func TestAttributePartitionCorrect(t *testing.T) {
 func TestAttributePartitionWrong(t *testing.T) {
 	inputData := getInputData(t)
 	attribute := "garbage"
-	_, err := utils.AttributePartition(inputData, inputData.Rows, attribute)
+	_, err := AttributePartition(inputData, inputData.Rows, attribute)
 	if err == nil {
 		t.Errorf("Expected error but got none")
 	}
@@ -39,7 +38,7 @@ func TestAttributePartitionWrong(t *testing.T) {
 
 func TestEntropyWhole(t *testing.T) {
 	inputData := getInputData(t)
-	entropy := utils.Entropy(inputData.Rows)
+	entropy := Entropy(inputData.Rows)
 	if entropy < 0.0 || entropy > 1.0 {
 		t.Errorf("%f entropy value out of range", entropy)
 	}
