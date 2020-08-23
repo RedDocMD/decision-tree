@@ -54,9 +54,8 @@ func ParseFile(filename string) (*InputData, error) {
 			}
 			inputData.ResultName = record[size]
 		} else {
-			if len(inputData.Rows) == idx-1 {
-				inputData.doubleRows()
-			}
+			inputData.Rows = append(inputData.Rows, *new(Row))
+			inputData.Rows[idx-1].Values = make(map[string]string)
 			for i := uint(0); i < size; i++ {
 				inputData.Rows[idx-1].Values[inputData.AttributeNames[i]] = record[i]
 				if !containsString(inputData.Attributes[i].Values, record[i]) {
@@ -82,20 +81,11 @@ func newInputData(size uint) *InputData {
 	inputData.AttributeNames = make([]string, size)
 	inputData.Attributes = make([]Attribute, size)
 	inputData.AttributesMap = make(map[string]Attribute)
-	inputData.Rows = make([]Row, 100)
 	for i := range inputData.Rows {
 		inputData.Rows[i].Values = make(map[string]string)
 	}
 	inputData.Length = 0
 	return inputData
-}
-
-func (data *InputData) doubleRows() {
-	newRows := make([]Row, len(data.Rows))
-	for i := range newRows {
-		newRows[i].Values = make(map[string]string)
-	}
-	data.Rows = append(data.Rows, newRows...)
 }
 
 func containsString(arr []string, elem string) bool {

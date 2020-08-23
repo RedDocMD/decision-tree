@@ -18,7 +18,7 @@ func getInputData(t *testing.T) *parser.InputData {
 func TestAttributePartitionCorrect(t *testing.T) {
 	inputData := getInputData(t)
 	attribute := "pclass"
-	partitions, err := utils.AttributePartition(inputData, attribute)
+	partitions, err := utils.AttributePartition(inputData, inputData.Rows, attribute)
 	if err != nil {
 		t.Errorf("Expected no error but got %v", err)
 	}
@@ -31,7 +31,7 @@ func TestAttributePartitionCorrect(t *testing.T) {
 func TestAttributePartitionWrong(t *testing.T) {
 	inputData := getInputData(t)
 	attribute := "garbage"
-	_, err := utils.AttributePartition(inputData, attribute)
+	_, err := utils.AttributePartition(inputData, inputData.Rows, attribute)
 	if err == nil {
 		t.Errorf("Expected error but got none")
 	}

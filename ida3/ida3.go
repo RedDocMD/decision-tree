@@ -33,7 +33,7 @@ func attributeForMaxEntropyGain(rows []parser.Row, data *parser.InputData) strin
 	maxGain := 0.0
 	bestAttribute := ""
 	for _, attribute := range data.AttributeNames {
-		gain := entropyGain(rows, attribute, data)
+		gain, _ := entropyGain(rows, attribute, data)
 		if gain >= maxGain {
 			maxGain = gain
 			bestAttribute = attribute
