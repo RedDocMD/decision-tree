@@ -21,6 +21,7 @@ type Row struct {
 // InputData is the input to this program
 type InputData struct {
 	Attributes     []Attribute
+	AttributesMap  map[string]Attribute
 	AttributeNames []string
 	Rows           []Row
 	ResultName     string
@@ -70,6 +71,9 @@ func ParseFile(filename string) (*InputData, error) {
 		}
 		idx++
 	}
+	for i := range inputData.AttributeNames {
+		inputData.AttributesMap[inputData.AttributeNames[i]] = inputData.Attributes[i]
+	}
 	return inputData, nil
 }
 
@@ -77,6 +81,7 @@ func newInputData(size uint) *InputData {
 	inputData := new(InputData)
 	inputData.AttributeNames = make([]string, size)
 	inputData.Attributes = make([]Attribute, size)
+	inputData.AttributesMap = make(map[string]Attribute)
 	inputData.Rows = make([]Row, 100)
 	for i := range inputData.Rows {
 		inputData.Rows[i].Values = make(map[string]string)
