@@ -38,5 +38,10 @@ func TestAttributePartitionWrong(t *testing.T) {
 }
 
 func TestEntropyWhole(t *testing.T) {
-
+	inputData := getInputData(t)
+	entropy := utils.Entropy(inputData.Rows)
+	if entropy < 0.0 || entropy > 1.0 {
+		t.Errorf("%f entropy value out of range", entropy)
+	}
+	t.Log(entropy, " entropy value")
 }
