@@ -22,3 +22,16 @@ func TestAttributePartitionCorrect(t *testing.T) {
 		t.Log("\t", variant, " : ", len(partitions[variant]), " rows")
 	}
 }
+
+func TestAttributePartitionWrong(t *testing.T) {
+	filename := "/home/deep/work/go/decision-tree/data/data1_19.csv"
+	inputData, err := parser.ParseFile(filename)
+	if err != nil {
+		t.Errorf("Expected no error but got %v", err)
+	}
+	attribute := "garbage"
+	_, err = utils.AttributePartition(inputData, attribute)
+	if err == nil {
+		t.Errorf("Expected error but got none")
+	}
+}
