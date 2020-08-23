@@ -77,9 +77,6 @@ func newInputData(size uint) *InputData {
 	inputData := new(InputData)
 	inputData.AttributeNames = make([]string, size)
 	inputData.Attributes = make([]Attribute, size)
-	for _, attribute := range inputData.Attributes {
-		attribute.Values = make([]string, 0)
-	}
 	inputData.Rows = make([]Row, 100)
 	for i := range inputData.Rows {
 		inputData.Rows[i].Values = make(map[string]string)
