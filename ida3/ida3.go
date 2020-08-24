@@ -4,6 +4,7 @@ import (
 	"RedDocMD/decision_tree/parser"
 	"RedDocMD/decision_tree/utils"
 	"errors"
+	"math"
 )
 
 func entropyGain(rows []parser.Row, attribute string, data *parser.InputData) (float64, error) {
@@ -47,6 +48,8 @@ type DecisionTree struct {
 	Attribute       string
 	ParentAttribute string
 	Children        map[string]*DecisionTree // Key values are variant names
+	isLeaf          bool
+	leafAnswer      bool
 }
 
 func newDecisionTree(attribute string, parentAttribute string) *DecisionTree {
@@ -54,5 +57,32 @@ func newDecisionTree(attribute string, parentAttribute string) *DecisionTree {
 	tree.Attribute = attribute
 	tree.ParentAttribute = parentAttribute
 	tree.Children = make(map[string]*DecisionTree)
+	tree.isLeaf = false
 	return tree
+}
+
+const eps float64 = 1e-6
+
+func ida3Internal(rows []parser.Row, data *parser.InputData, tree *DecisionTree) {
+	baseEntropy := utils.Entropy(rows)
+	if math.Abs(baseEntropy) <= eps {
+		tree.isLeaf = true
+		tree.leafAnswer = rows[0].Result
+	} else {
+		bestAttribute := attributeForMaxEntropyGain(rows, data)
+		partitionedRows, _ := utils.AttributePartition(data, rows, bestAttribute)
+		tree.Attribute = bestAttribute
+		for _, variant := range data.AttributesMap[bestAttribute].Values {
+			subTree := newDecisionTree("", bestAttribute)
+			ida3Internal(partitionedRows[variant], data, subTree)
+			tree.Children[variant] = subTree
+		}
+	}
+}
+
+// IDA3 performs the IDA3 algorithm on the data passed and returns a decision tree
+func IDA3(data *parser.InputData) *DecisionTree {
+	decisionTree := newDecisionTree("", "")
+	ida3Internal(data.Rows, data, decisionTree)
+	return decisionTree
 }
