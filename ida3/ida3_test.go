@@ -7,11 +7,17 @@ import (
 
 func TestMaxEntropyAttribute(t *testing.T) {
 	inputData := getInputData(t)
-	bestAtttribute := attributeForMaxEntropyGain(inputData.Rows, inputData)
+	bestAtttribute := attributeForMaxEntropyGain(inputData.Rows, inputData, nil)
 	if bestAtttribute == "" {
 		t.Error("Expected an attribute")
 	}
 	t.Log(bestAtttribute)
+}
+
+func TestIDA3(t *testing.T) {
+	inputData := getInputData(t)
+	decisionTree := IDA3(inputData)
+	t.Log("\n", decisionTree.String())
 }
 
 func getInputData(t *testing.T) *parser.InputData {
