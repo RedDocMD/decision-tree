@@ -15,6 +15,6 @@ func main() {
 		decisionTree := ida3.IDA3(inputData)
 		dotFileName := "./dot/graph1.svg"
 		decisionTree.ToGraphvizSVG(dotFileName)
-		fmt.Println(decisionTree)
+	fmt.Println(decisionTree)
 	}
 }
