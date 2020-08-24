@@ -2,4 +2,7 @@ module RedDocMD/decision_tree
 
 go 1.14
 
-require golang.org/x/tools v0.0.0-20200821200730-1e23e48ab93b // indirect
+require (
+	github.com/goccy/go-graphviz v0.0.6 // indirect
+	golang.org/x/tools v0.0.0-20200821200730-1e23e48ab93b // indirect
+)
