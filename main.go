@@ -13,6 +13,8 @@ func main() {
 		fmt.Println("Wrong filename")
 	} else {
 		decisionTree := ida3.IDA3(inputData)
+		dotFileName := "./dot/graph1.svg"
+		decisionTree.ToGraphvizPNG(dotFileName)
 		fmt.Println(decisionTree)
 	}
 }
